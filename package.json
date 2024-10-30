@@ -2,12 +2,12 @@
   "name": "personal-finance-tracker",
   "version": "1.0.0",
   "description": "This MERN stack application for personal finance tracker",
-  "main": "index.js",
+  "main": "server.js",
   "type": "module",
   "scripts": {
-    "start": "nodemon backend/index.js",
-    "dev": "set NODE_ENV=development&& nodemon backend/index.js",
-    "prod": "set NODE_ENV=production&& nodemon backend/index.js",
+    "start": "nodemon backend/server.js",
+    "dev": "set NODE_ENV=development&& nodemon backend/server.js",
+    "prod": "set NODE_ENV=production&& nodemon backend/server.js",
     "test": "npm test"
   },
   "author": "kabilan s",
