@@ -16,19 +16,12 @@ app.use(cors());
 app.use(express.json());
 
 
-
-
-
-
-
 const PORT = process.env.PORT || 5000; 
 const server = app.listen(PORT, () => {
   console.log(
     `Server listening on port ${PORT} in ${process.env.NODE_ENV} mode`
   );
 });
-
-
 
 
 mongoose
