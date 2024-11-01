@@ -21,12 +21,17 @@ const server = app.listen(PORT, () => {
   console.log(
     `Server listening on port ${PORT} in ${process.env.NODE_ENV} mode`
   );
+  
 });
 
+app.get("/", (req, res) => {
+  res.send("Welcome to the API");
+});
+
+app.use('/api/v1/', auth);
 
 mongoose
   .connect(process.env.MONGO_URI)
   .then(() => console.log("MongoDB connected successfully"))
   .catch((error) => console.error("MongoDB connection error:", error));
 
-  app.use("/api/v1/", auth);
