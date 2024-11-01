@@ -28,7 +28,7 @@ app.get("/", (req, res) => {
   res.send("Welcome to the API");
 });
 
-app.use('/api/v1/', auth);
+app.use('/api/v1/auth', auth);
 
 mongoose
   .connect(process.env.MONGO_URI)

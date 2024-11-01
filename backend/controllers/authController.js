@@ -1,28 +1,36 @@
-import User from '../models/userModel.js'
+// backend/controllers/authController.js
+import jwt from "jsonwebtoken";
+import User from "../models/userModel.js";
 
-export const registerUser = async(req,res,next) =>{
-    const {name, email, password} = req.body;
+// Helper to generate JWT
+const generateToken = (id) => {
+  return jwt.sign({ id }, process.env.JWT_SECRET, { expiresIn: "1h" });
+};
 
-    const user = await User.create({
-        name: name,
-        email: email,
-        password: password
-    })
+export const registerUser = async (req, res) => {
+  const { name, email, password } = req.body;
+  try {
+    const user = await User.create({ name, email, password });
+    res.status(201).json({ message: "User registered successfully" });
+  } catch (error) {
+    res.status(400).json({ message: "User registration failed", error });
+  }
+};
 
-    res.status(200).json({ message: "User registered successfully" });
-}
-
-export const loginUser = async(req,res,next) => {
-    
-    const {email, password} = req.body;
-
-    if(!email || !password){
-        return next("Invalid email or password");
+export const loginUser = async (req, res) => {
+  const { email, password } = req.body;
+  try {
+    const user = await User.findOne({ email });
+    if (user && (await user.matchPassword(password))) {
+      const token = generateToken(user._id);
+      res.status(200).json({
+        token,
+        name: user.name, // Send user name with the token
+      });
+    } else {
+      res.status(401).json({ message: "Invalid credentials" });
     }
-
-    res.status(200).json({
-        status:true,
-        message:"login successfull"
-    })
-
-}
+  } catch (error) {
+    res.status(500).json({ message: "Server error", error });
+  }
+};
